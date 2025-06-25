@@ -4,7 +4,16 @@ import { useRouter } from "next/router";
 import { useCart } from "../../context/CartContext";
 import { useState, useEffect } from "react";
 
-const products = [
+type Product = {
+  id: number;
+  name: string;
+  category: string;
+  price: number;
+  description: string;
+  image: string;
+};
+
+const products: Product[] = [
   { id: 1, name: "Classic Dill Pickle", category: "Dill", price: 3.99, description: "A classic dill pickle with a crisp and tangy flavor.", image: "/pickles/classic-dill.jpg" },
   { id: 2, name: "Spicy Jalapeño Pickle", category: "Spicy", price: 4.49, description: "A spicy jalapeño pickle for those who like a kick.", image: "/pickles/spicy-jalapeno.jpg" },
   { id: 3, name: "Sweet Bread and Butter Pickle", category: "Sweet", price: 3.79, description: "Sweet and tangy bread and butter pickle.", image: "/pickles/bread-butter.jpg" },
@@ -30,7 +39,7 @@ const products = [
 export default function ProductDetail() {
   const router = useRouter();
   const { addToCart } = useCart();
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     const { id } = router.query;
