@@ -1,5 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata } from "next/types";
+import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
+import AuthProvider from "./components/AuthProvider";
+import { CartProvider } from "./context/CartContext";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -25,9 +28,69 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col`}
       >
-        {children}
+        <AuthProvider>
+          <CartProvider>
+            <header className="bg-white dark:bg-gray-800 shadow-md">
+              <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex justify-between h-16 items-center">
+                  <div className="flex-shrink-0 font-bold text-xl">
+                    <Link href="/">My Website</Link>
+                  </div>
+                  <div className="hidden md:flex space-x-8">
+                    <Link
+                      href="/"
+                      className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                    >
+                      Home
+                    </Link>
+                    <Link
+                      href="/about-us"
+                      className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                    >
+                      About Us
+                    </Link>
+                    <Link
+                      href="/product"
+                      className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                    >
+                      Product
+                    </Link>
+                    <Link
+                      href="/settings"
+                      className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                    >
+                      Settings
+                    </Link>
+                    <Link
+                      href="/chat-with-us"
+                      className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                    >
+                      Chat With Us
+                    </Link>
+                    <Link
+                      href="/maps"
+                      className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                    >
+                      Maps
+                    </Link>
+                    <Link
+                      href="/cart"
+                      className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                    >
+                      Cart
+                    </Link>
+                  </div>
+                </div>
+              </nav>
+            </header>
+            {children}
+            <footer className="bg-white dark:bg-gray-800 shadow-inner text-center py-4 text-sm text-gray-600 dark:text-gray-400">
+              &copy; {new Date().getFullYear()} My Website. All rights reserved.
+            </footer>
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );
